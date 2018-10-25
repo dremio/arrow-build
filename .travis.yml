@@ -1,0 +1,10 @@
+sudo: required
+dist: trusty
+matrix:
+  fast_finish: true
+  allow_failures: 
+  include:
+  - os: linux
+    language: java
+script:
+  - "$TRAVIS_BUILD_DIR/deploy_gandiva_jar.sh
