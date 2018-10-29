@@ -1,10 +1,48 @@
-sudo: required
+branches:
+  # don't attempt to build branches intented for windows builds
+  except:
+    - /.*win.*/
+
+os: linux
 dist: trusty
-matrix:
-  fast_finish: true
-  allow_failures: 
-  include:
-  - os: linux
-    language: java
+language: generic
+
+before_install:
+    # Install Miniconda.
+    - echo `pwd`
+    - |
+      echo ""
+      echo "Installing a fresh version of Miniconda."
+      MINICONDA_URL="https://repo.continuum.io/miniconda"
+      MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
+      curl -L -O "${MINICONDA_URL}/${MINICONDA_FILE}"
+      bash $MINICONDA_FILE -b
+    # Configure conda.
+    - |
+      echo ""
+      echo "Configuring conda."
+      source /home/travis/miniconda3/bin/activate root
+      conda config --remove channels defaults
+      conda config --add channels defaults
+      conda config --add channels conda-forge
+      conda config --set show_channel_urls true
+install:
+  - |
+    conda install -y \
+      jinja2 \
+      pygit2 \
+      click \
+      jira \
+      toolz \
+      ruamel.yaml \
+      setuptools_scm \
+      github3.py \
+      python-gnupg
 script:
-  - "$TRAVIS_BUILD_DIR/deploy_gandiva_jar.sh
+  # clone arrow
+  - pushd ..
+  - git clone -b crossbow https://github.com/apache/arrow
+
+  # submit packaging tasks
+  - |
+    python arrow/dev/tasks/crossbow.py submit --job-prefix nightly -g gandiva
