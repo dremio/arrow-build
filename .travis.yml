@@ -37,7 +37,7 @@ script:
 - pushd ..
 - git clone -b master https://github.com/apache/arrow
 - echo $TRAVIS_BUILD_DIR
-- python arrow/dev/tasks/crossbow.py submit --queue-path $TRAVIS_BUILD_DIR --job-prefix nightly -g gandiva
+- python arrow/dev/tasks/crossbow.py --queue-path $TRAVIS_BUILD_DIR submit --job-prefix nightly -g gandiva
 env:
   global:
   - secure: c/fmnGDk2+TqN3TfBX6f4X/hRd2iZb6eG2RI0nJVHxg+6mYqeSC2CTro027A37cZisliZyidtzr+vko51+O3KZbQXf945+Nhe1KwYQcyAER3VDuJyXPSZoLYTa9GoFYBxRSU6wLuaqu8jWCaWIJDDzTl7CgWslqx1vGbsirvYX/IRnwSOhmuPW6V/i/UEva0Jy8AfW+hY8yR/A7CNU24JYA0dWR0N8hAPPQ7ASb5Tbs4HmU0YkoPgtBzjMviMxElYu7ITeOFVDtRSSzoHhN5nl0nLF6O3zHyq5TD83B+GTX0VcZkeEiJ8NbuRwIbvpcJD9u53IS+x0GlDiB9d81/8hu7lgtnn8dz5emNDc95cPellBgEMtohi0jnqHvO2eHAKklrZGRzakVb4U4eo2ABEC5y1UQ7mv3JJqo+6FWvlXDIY1p0Tpd28DIKWz1wm8UnmMGdxdIWd4ziYvV1zGQdhhLRNXm9D5Ar1PLvuq8dW9XVqnunF/e9JeJflTvLv22hY4J0RQGKeuzWwkbSs4TAE0vkSBF4XprxJSjF6yd0GfvTW10xA2UAJY3MR688paZbI7lciJ5BumzzQR82e15ZyVRS+XsOn1tnNfkoR0NchtWL5zG6HyegYFlkYmPSK/HkygVxWf2TwKh4brhC0OKU1s5Y4WnoVXol9OaLvRxCs2c=
