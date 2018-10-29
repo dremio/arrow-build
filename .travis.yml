@@ -1,48 +1,43 @@
 branches:
-  # don't attempt to build branches intented for windows builds
   except:
-    - /.*win.*/
-
+  - "/.*win.*/"
 os: linux
 dist: trusty
 language: generic
-
 before_install:
-    # Install Miniconda.
-    - echo `pwd`
-    - |
-      echo ""
-      echo "Installing a fresh version of Miniconda."
-      MINICONDA_URL="https://repo.continuum.io/miniconda"
-      MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
-      curl -L -O "${MINICONDA_URL}/${MINICONDA_FILE}"
-      bash $MINICONDA_FILE -b
-    # Configure conda.
-    - |
-      echo ""
-      echo "Configuring conda."
-      source /home/travis/miniconda3/bin/activate root
-      conda config --remove channels defaults
-      conda config --add channels defaults
-      conda config --add channels conda-forge
-      conda config --set show_channel_urls true
+- echo `pwd`
+- |
+  echo ""
+  echo "Installing a fresh version of Miniconda."
+  MINICONDA_URL="https://repo.continuum.io/miniconda"
+  MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
+  curl -L -O "${MINICONDA_URL}/${MINICONDA_FILE}"
+  bash $MINICONDA_FILE -b
+- |
+  echo ""
+  echo "Configuring conda."
+  source /home/travis/miniconda3/bin/activate root
+  conda config --remove channels defaults
+  conda config --add channels defaults
+  conda config --add channels conda-forge
+  conda config --set show_channel_urls true
 install:
-  - |
-    conda install -y \
-      jinja2 \
-      pygit2 \
-      click \
-      jira \
-      toolz \
-      ruamel.yaml \
-      setuptools_scm \
-      github3.py \
-      python-gnupg
+- |
+  conda install -y \
+    jinja2 \
+    pygit2 \
+    click \
+    jira \
+    toolz \
+    ruamel.yaml \
+    setuptools_scm \
+    github3.py \
+    python-gnupg
 script:
-  # clone arrow
-  - pushd ..
-  - git clone -b crossbow https://github.com/apache/arrow
-
-  # submit packaging tasks
-  - |
-    python arrow/dev/tasks/crossbow.py submit --job-prefix nightly -g gandiva
+- pushd ..
+- git clone -b master https://github.com/apache/arrow
+- python arrow/dev/tasks/crossbow.py submit --job-prefix nightly -g gandiva
+env:
+  matrix:
+  - secure: c/fmnGDk2+TqN3TfBX6f4X/hRd2iZb6eG2RI0nJVHxg+6mYqeSC2CTro027A37cZisliZyidtzr+vko51+O3KZbQXf945+Nhe1KwYQcyAER3VDuJyXPSZoLYTa9GoFYBxRSU6wLuaqu8jWCaWIJDDzTl7CgWslqx1vGbsirvYX/IRnwSOhmuPW6V/i/UEva0Jy8AfW+hY8yR/A7CNU24JYA0dWR0N8hAPPQ7ASb5Tbs4HmU0YkoPgtBzjMviMxElYu7ITeOFVDtRSSzoHhN5nl0nLF6O3zHyq5TD83B+GTX0VcZkeEiJ8NbuRwIbvpcJD9u53IS+x0GlDiB9d81/8hu7lgtnn8dz5emNDc95cPellBgEMtohi0jnqHvO2eHAKklrZGRzakVb4U4eo2ABEC5y1UQ7mv3JJqo+6FWvlXDIY1p0Tpd28DIKWz1wm8UnmMGdxdIWd4ziYvV1zGQdhhLRNXm9D5Ar1PLvuq8dW9XVqnunF/e9JeJflTvLv22hY4J0RQGKeuzWwkbSs4TAE0vkSBF4XprxJSjF6yd0GfvTW10xA2UAJY3MR688paZbI7lciJ5BumzzQR82e15ZyVRS+XsOn1tnNfkoR0NchtWL5zG6HyegYFlkYmPSK/HkygVxWf2TwKh4brhC0OKU1s5Y4WnoVXol9OaLvRxCs2c=
+  - secure: KJKqFZF6UZ1umlZLEkz94CPt5nCNn8N226iRXBsWad6v52epikNYzGQziQ4jzzhAu1YP50oYBYyis0mmR+gnjzrDbfEgejzR3hIlmyECRqQFLOK9ogONm7Q1Ues3UFr8w3CfoOnwOV+epFGeNRv7v0feu4B1ZHePtPgW7T6YrhcRttSqtLsPCQaVuM5d+UXcalPMBKndWqA7SO2PiYD6kRrG5kQ7E+Rl4IrnDksFcZMdD8izp+QE7ZWeuINl4h54zi5ANANTn74aNO6bEHALA6XJlJAW616mk7Z9QHyADdrWVN7i0LZOq6umHMxy6xhVakMeve64r5eCyUBPUkdmEpQPCRWaI74Z+0Im2HX1qOfV9WrrnbwkbVXdcrszUmwzQSctOZIvoQ2KHujf/YC4ezdVRrDtD4DQFjOAM7BahKewnOvr9jesZL5m4VXWes12k8lXk6fSJNaJtnnUFmjbNvIww533GoQahnDAeRZAqJ/yHuUhyxAy9mcUvL0KIXPZxHL4GzucGf0xrr5+9HOuyL2vZfM2qKq7XDuJQhh297x8PC3Yx3VphE81MEBW5CwbNlkgFVNSF75SsXlVfLRbnsTi5tW8SysbscE/nE+WGSkpMqEMXEDHYoJFAfsTEIA8NmS79e90QVVdeECVcRaBWtSJBXMko2n/VWaZ8NLQu04=
