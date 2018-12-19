@@ -1,0 +1,25 @@
+!Job
+target: !Target
+  head: 944b9e319a5f208c0fc45953d1f10972b1433020
+  email: travis@example.org
+  branch: master
+  remote: https://github.com/apache/arrow
+  version: 0.11.1.dev446
+tasks:
+  gandiva-jar-osx: !Task
+    platform: osx
+    template: gandiva-jars/travis.osx.yml
+    artifacts:
+    - arrow-gandiva-0.11.1.dev446-SNAPSHOT.jar
+    params: {}
+    branch: nightly-59-gandiva-jar-osx
+    commit: 027ff7f7efddb47b3ac23e05a9620c4c72bcd066
+  gandiva-jar-trusty: !Task
+    platform: linux
+    template: gandiva-jars/travis.linux.yml
+    artifacts:
+    - arrow-gandiva-0.11.1.dev446-SNAPSHOT.jar
+    params: {}
+    branch: nightly-59-gandiva-jar-trusty
+    commit: cb4f6eb7409ca8d5d43e69b84532e79da9eda8fa
+branch: nightly-59
