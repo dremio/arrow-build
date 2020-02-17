@@ -36,4 +36,4 @@ install:
 script:
 - pushd ..
 - git clone -b master https://github.com/apache/arrow
-- python arrow/dev/tasks/crossbow.py --queue-path $TRAVIS_BUILD_DIR submit --job-prefix nightly -g gandiva
+- python arrow/dev/tasks/crossbow.py --queue-path $TRAVIS_BUILD_DIR --queue-remote https://github.com/$TRAVIS_REPO_SLUG submit --job-prefix nightly -g gandiva
