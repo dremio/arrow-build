@@ -35,5 +35,5 @@ install:
     python-gnupg
 script:
 - pushd ..
-- git clone -b master https://github.com/apache/arrow
+- git clone -b rel-460 https://github.com/dremio/arrow
 - python arrow/dev/tasks/crossbow.py --queue-path $TRAVIS_BUILD_DIR --queue-remote https://github.com/$TRAVIS_REPO_SLUG submit --job-prefix nightly -g gandiva
