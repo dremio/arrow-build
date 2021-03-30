@@ -1,39 +1,9 @@
+
 branches:
-  except:
-  - "/.*win.*/"
+  only:
+    - master
+    - /.*-travis-.*/
+
 os: linux
 dist: trusty
 language: generic
-before_install:
-- echo `pwd`
-- |
-  echo ""
-  echo "Installing a fresh version of Miniconda."
-  MINICONDA_URL="https://repo.continuum.io/miniconda"
-  MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
-  curl -L -O "${MINICONDA_URL}/${MINICONDA_FILE}"
-  bash $MINICONDA_FILE -b
-- |
-  echo ""
-  echo "Configuring conda."
-  source /home/travis/miniconda3/bin/activate root
-  conda config --remove channels defaults
-  conda config --add channels defaults
-  conda config --add channels conda-forge
-  conda config --set show_channel_urls true
-install:
-- |
-  conda install -y \
-    jinja2 \
-    pygit2 \
-    click \
-    jira \
-    toolz \
-    ruamel.yaml \
-    setuptools_scm \
-    github3.py \
-    python-gnupg
-script:
-- pushd ..
-- git clone -b master https://github.com/apache/arrow
-- python arrow/dev/tasks/crossbow.py --queue-path $TRAVIS_BUILD_DIR --queue-remote https://github.com/$TRAVIS_REPO_SLUG submit --job-prefix nightly -g gandiva
