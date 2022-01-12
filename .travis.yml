@@ -37,4 +37,3 @@ script:
 - pushd ..
 - git clone -b custom-arrow-branch https://github.com/nivia007/arrow
 - python arrow/dev/tasks/crossbow.py --queue-path $TRAVIS_BUILD_DIR --queue-remote https://github.com/$TRAVIS_REPO_SLUG submit --job-prefix nightly -g gandiva
-
