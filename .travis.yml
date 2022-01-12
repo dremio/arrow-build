@@ -33,6 +33,7 @@ install:
     setuptools_scm \
     github3.py \
     python-gnupg
+    
 script:
 - pushd ..
 - git clone -b custom-arrow-branch https://github.com/nivia007/arrow
